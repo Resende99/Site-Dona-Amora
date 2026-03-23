@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dona Amora — Moda Feminina</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --roxo: #3d1a4a;
+    --roxo-claro: #7b3f96;
+    --roxo-suave: #f5eef8;
+    --roxo-palido: #ede0f5;
+    --verde-wa: #25d366;
+    --off-white: #fdfbfe;
+    --cinza: #9a8fa0;
+    --cinza-claro: #e8e0ec;
+    --escuro: #1a0a20;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Raleway', sans-serif; background: var(--off-white); color: var(--escuro); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 28px;
+    background: rgba(253,251,254,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(61,26,74,0.08);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; }
+  .nav-logo-circle { width: 38px; height: 38px; background: var(--roxo); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .nav-logo-circle svg { width: 20px; height: 20px; color: white; }
+  .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .nav-logo-dona { font-family: 'Playfair Display', serif; font-style: italic; font-size: 10px; color: var(--roxo-claro); letter-spacing: 0.08em; }
+  .nav-logo-amora { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--roxo); }
+  .nav-menu { display: flex; gap: 28px; list-style: none; }
+  .nav-menu a { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--escuro); text-decoration: none; transition: color 0.2s; }
+  .nav-menu a:hover { color: var(--roxo-claro); }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--roxo); border-radius: 2px; }
+
+  .hero {
+    min-height: 100vh; background: var(--roxo);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 120px 28px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 20% 20%, rgba(123,63,150,0.5) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 80% 80%, rgba(92,45,114,0.6) 0%, transparent 60%);
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; padding: 8px 20px; border-radius: 100px; margin-bottom: 40px; animation: fadeUp 0.8s ease both; }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--roxo-claro); opacity: 0.8; }
+  .hero-logo-grande { font-family: 'Playfair Display', serif; color: white; margin-bottom: 28px; animation: fadeUp 0.8s 0.1s ease both; }
+  .hero-logo-grande .dona { display: block; font-style: italic; font-weight: 400; font-size: clamp(22px, 6vw, 42px); color: rgba(255,255,255,0.65); letter-spacing: 0.12em; margin-bottom: 4px; }
+  .hero-logo-grande .amora { display: block; font-weight: 700; font-size: clamp(52px, 14vw, 100px); letter-spacing: 0.08em; text-transform: uppercase; line-height: 0.9; }
+  .hero-tagline { font-size: clamp(13px, 3vw, 16px); color: rgba(255,255,255,0.5); font-weight: 300; letter-spacing: 0.08em; margin-bottom: 48px; animation: fadeUp 0.8s 0.25s ease both; }
+  .hero-tagline em { font-style: italic; color: rgba(255,255,255,0.75); font-family: 'Playfair Display', serif; }
+  .hero-btns { display: flex; flex-direction: column; align-items: center; gap: 14px; animation: fadeUp 0.8s 0.4s ease both; }
+  .btn-wa { display: inline-flex; align-items: center; gap: 10px; background: var(--verde-wa); color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 17px 36px; border-radius: 100px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+  .btn-wa:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(37,211,102,0.4); }
+  .btn-wa svg { width: 17px; height: 17px; }
+  .btn-colecao { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: rgba(255,255,255,0.7); font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; padding: 14px 32px; border-radius: 100px; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); transition: background 0.2s, color 0.2s; }
+  .btn-colecao:hover { background: rgba(255,255,255,0.08); color: white; }
+  .btn-colecao svg { width: 15px; height: 15px; }
+  .hero-scroll { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; color: rgba(255,255,255,0.3); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; animation: fadeUp 1s 0.9s ease both; }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent); animation: scrollLine 2s ease-in-out infinite; }
+  @keyframes scrollLine { 0%,100%{opacity:1;transform:scaleY(1)} 50%{opacity:0.3;transform:scaleY(0.5)} }
+
+  .diferenciais { padding: 90px 28px; background: var(--off-white); }
+  .section-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--roxo-claro); text-align: center; margin-bottom: 14px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(30px, 7vw, 48px); font-weight: 400; text-align: center; color: var(--roxo); margin-bottom: 48px; line-height: 1.2; }
+  .section-title em { font-style: italic; color: var(--roxo-claro); }
+  .dif-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; max-width: 500px; margin: 0 auto; background: var(--cinza-claro); border-radius: 20px; overflow: hidden; }
+  .dif-card { padding: 28px 22px; display: flex; flex-direction: column; gap: 14px; }
+  .dif-card.claro { background: white; }
+  .dif-card.escuro { background: var(--roxo); }
+  .dif-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .dif-card.claro .dif-icon { background: var(--roxo); }
+  .dif-card.escuro .dif-icon { background: rgba(255,255,255,0.12); }
+  .dif-icon svg { width: 18px; height: 18px; color: white; }
+  .dif-card h3 { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; }
+  .dif-card.claro h3 { color: var(--roxo); }
+  .dif-card.escuro h3 { color: white; }
+  .dif-card p { font-size: 11px; line-height: 1.8; font-weight: 300; }
+  .dif-card.claro p { color: var(--cinza); }
+  .dif-card.escuro p { color: rgba(255,255,255,0.5); }
+
+  .instagram-section { padding: 90px 28px; background: var(--roxo-suave); text-align: center; }
+  .insta-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 7vw, 44px); font-weight: 400; color: var(--roxo); margin-bottom: 12px; line-height: 1.2; }
+  .insta-title em { font-style: italic; color: var(--roxo-claro); }
+  .insta-sub { font-size: 13px; color: var(--cinza); font-weight: 300; line-height: 1.8; margin-bottom: 32px; max-width: 300px; margin-left: auto; margin-right: auto; }
+  .insta-handle-box { display: inline-flex; flex-direction: column; align-items: center; gap: 12px; background: white; border: 1px solid var(--cinza-claro); border-radius: 24px; padding: 28px 40px; margin-bottom: 20px; }
+  .insta-icon { width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); display: flex; align-items: center; justify-content: center; }
+  .insta-icon svg { width: 28px; height: 28px; color: white; }
+  .insta-handle-nome { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 400; color: var(--roxo); }
+  .insta-handle-nome span { font-style: italic; color: var(--roxo-claro); }
+  .insta-desc { font-size: 11px; color: var(--cinza); font-weight: 400; letter-spacing: 0.05em; }
+  .insta-frase { font-size: 13px; color: var(--cinza); font-weight: 300; line-height: 1.7; margin-bottom: 24px; max-width: 280px; margin-left: auto; margin-right: auto; }
+  .btn-insta { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 16px 36px; border-radius: 100px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+  .btn-insta:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(188,24,136,0.3); }
+  .btn-insta svg { width: 16px; height: 16px; }
+
+  .produtos { padding: 90px 28px; background: var(--off-white); }
+  .produtos-header { display: flex; align-items: center; justify-content: space-between; max-width: 500px; margin: 0 auto 32px; }
+  .produtos-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--roxo-claro); margin-bottom: 8px; }
+  .produtos-titulo { font-family: 'Playfair Display', serif; font-size: clamp(24px, 6vw, 36px); font-weight: 400; color: var(--roxo); line-height: 1.2; }
+  .ver-todos { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--roxo-claro); text-decoration: none; transition: gap 0.2s; flex-shrink: 0; }
+  .ver-todos:hover { gap: 10px; }
+  .ver-todos svg { width: 14px; height: 14px; }
+  .produtos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 500px; margin: 0 auto; }
+  .produto-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--cinza-claro); transition: transform 0.25s, box-shadow 0.25s; text-decoration: none; color: inherit; display: block; }
+  .produto-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(61,26,74,0.15); }
+  .produto-img { position: relative; aspect-ratio: 3/4; overflow: hidden; background: var(--roxo-palido); }
+  .produto-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .produto-card:hover .produto-img img { transform: scale(1.06); }
+  .produto-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--roxo-palido), var(--roxo-suave)); }
+  .produto-placeholder svg { width: 44px; height: 44px; color: var(--roxo-claro); opacity: 0.3; }
+  .produto-info { padding: 16px 14px; }
+  .produto-nome { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 400; color: var(--roxo); margin-bottom: 6px; line-height: 1.3; }
+  .produto-preco { font-size: 15px; font-weight: 700; color: var(--roxo-claro); margin-bottom: 10px; }
+  .produto-tamanhos { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+  .tamanho-tag { font-size: 9px; font-weight: 600; padding: 3px 7px; border-radius: 5px; border: 1px solid var(--cinza-claro); color: var(--cinza); }
+  .tamanho-tag.disponivel { border-color: var(--roxo-claro); color: var(--roxo-claro); background: var(--roxo-suave); }
+  .btn-ver { display: flex; align-items: center; justify-content: center; width: 100%; background: var(--roxo); color: white; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 11px; border-radius: 100px; transition: background 0.2s; }
+  .produto-card:hover .btn-ver { background: var(--roxo-claro); }
+  .sem-produtos { grid-column: 1/-1; text-align: center; padding: 60px; color: var(--cinza); font-size: 13px; }
+  .ver-todos-btn-wrap { max-width: 500px; margin: 28px auto 0; }
+  .ver-todos-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: white; color: var(--roxo); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 17px; border-radius: 14px; text-decoration: none; border: 1.5px solid var(--cinza-claro); transition: border-color 0.2s, box-shadow 0.2s; }
+  .ver-todos-btn:hover { border-color: var(--roxo-claro); box-shadow: 0 4px 20px rgba(61,26,74,0.1); }
+  .ver-todos-btn svg { width: 16px; height: 16px; }
+
+  .cta-section { padding: 90px 28px; background: var(--roxo); text-align: center; position: relative; overflow: hidden; }
+  .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(123,63,150,0.4) 0%, transparent 70%); }
+  .cta-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 14px; position: relative; z-index: 1; }
+  .cta-title { font-family: 'Playfair Display', serif; font-size: clamp(30px, 7vw, 48px); font-weight: 400; color: white; margin-bottom: 16px; line-height: 1.2; position: relative; z-index: 1; }
+  .cta-title em { font-style: italic; color: rgba(255,255,255,0.55); }
+  .cta-section p { color: rgba(255,255,255,0.6); font-size: 13px; line-height: 1.9; margin-bottom: 40px; max-width: 300px; margin-left: auto; margin-right: auto; font-weight: 300; position: relative; z-index: 1; }
+  .cta-section .btn-wa { position: relative; z-index: 1; }
+
+  footer { background: var(--escuro); padding: 60px 28px 40px; }
+  .footer-logo-dona { font-family: 'Playfair Display', serif; font-style: italic; font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; }
+  .footer-logo-amora { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: 0.22em; text-transform: uppercase; color: white; margin-bottom: 14px; }
+  .footer-desc { font-size: 12px; line-height: 1.9; color: rgba(255,255,255,0.4); margin-bottom: 36px; max-width: 260px; font-weight: 300; }
+  .footer-section h4 { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 16px; }
+  .footer-section a { font-size: 12px; color: rgba(255,255,255,0.4); display: flex; align-items: center; gap: 10px; margin-bottom: 10px; text-decoration: none; transition: color 0.2s; font-weight: 300; }
+  .footer-section a:hover { color: var(--roxo-claro); }
+  .footer-section svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .footer-bottom { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 10px; color: rgba(255,255,255,0.2); text-align: center; letter-spacing: 0.1em; }
+
+  .wa-float { position: fixed; bottom: 28px; right: 24px; width: 58px; height: 58px; background: var(--verde-wa); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 24px rgba(37,211,102,0.4); z-index: 99; text-decoration: none; transition: transform 0.2s; }
+  .wa-float:hover { transform: scale(1.08); }
+  .wa-float svg { width: 28px; height: 28px; color: white; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+  @media (max-width: 600px) { .nav-menu{display:none} .nav-hamburger{display:flex} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-circle">
+      <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="3"/><path d="M12 2C9.5 2 7.5 4 7.5 6.5c0 1.5.7 2.8 1.8 3.7L12 22l2.7-11.8c1.1-.9 1.8-2.2 1.8-3.7C16.5 4 14.5 2 12 2z"/></svg>
+    </div>
+    <div class="nav-logo-text">
+      <span class="nav-logo-dona">Dona</span>
+      <span class="nav-logo-amora">Amora</span>
+    </div>
+  </div>
+  <ul class="nav-menu">
+    <li><a href="/produtos/">Coleção</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <div class="nav-hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Moda Feminina • Desterro de Entre Rios</div>
+    <div class="hero-logo-grande">
+      <span class="dona">Dona</span>
+      <span class="amora">Amora</span>
+    </div>
+    <p class="hero-tagline">Moda que faz você se sentir <em>única</em></p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5500000000000" class="btn-wa">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.124 1.534 5.856L0 24l6.335-1.51A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.378l-.36-.214-3.726.888.92-3.638-.235-.373A9.818 9.818 0 1112 21.818z"/></svg>
+        Falar no WhatsApp
+      </a>
+      <a href="/produtos/" class="btn-colecao">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Ver coleção completa
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div></div>
+</section>
+
+<section class="diferenciais" id="sobre">
+  <div class="section-eyebrow">Por que nos escolher</div>
+  <div class="section-title">Feita para <em>você</em></div>
+  <div class="dif-grid">
+    <div class="dif-card claro">
+      <div class="dif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <h3>Atendimento pelo WhatsApp</h3>
+      <p>Tire dúvidas e feche seu pedido direto no chat com atendimento rápido e exclusivo.</p>
+    </div>
+    <div class="dif-card escuro">
+      <div class="dif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+      <h3>Curadoria especial</h3>
+      <p>Peças escolhidas a dedo com qualidade e tendência garantidas toda semana.</p>
+    </div>
+    <div class="dif-card escuro">
+      <div class="dif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <h3>Novidades toda semana</h3>
+      <p>Coleção sempre atualizada. Siga nosso Instagram e fique por dentro de tudo.</p>
+    </div>
+    <div class="dif-card claro">
+      <div class="dif-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <h3>Moda para toda mulher</h3>
+      <p>Tamanhos variados, cores diversas — do casual ao elegante, a Dona Amora tem o seu look.</p>
+    </div>
+  </div>
+</section>
+
+<section class="instagram-section">
+  <div class="section-eyebrow">Siga a gente</div>
+  <h2 class="insta-title">Novidades no<br><em>Instagram</em></h2>
+  <p class="insta-sub">Acompanhe os lançamentos, looks e promoções exclusivas antes de todo mundo.</p>
+  <div class="insta-handle-box">
+    <div class="insta-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    </div>
+    <div class="insta-handle-nome"><span>@</span>Dona_amora</div>
+    <div class="insta-desc">Moda feminina • Desterro de Entre Rios</div>
+  </div>
+  <p class="insta-frase">Siga no Instagram e acompanhe as novidades da coleção em primeira mão!</p>
+  <a href="https://instagram.com/Dona_amora" target="_blank" class="btn-insta">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    Seguir no Instagram
+  </a>
+</section>
+
+<section class="produtos" id="produtos">
+  <div class="produtos-header">
+    <div>
+      <div class="produtos-eyebrow">Nova Coleção</div>
+      <div class="produtos-titulo">Destaques</div>
+    </div>
+    <a href="/produtos/" class="ver-todos">
+      Ver todas
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="produtos-grid">
+    {% for produto in produtos %}
+    <a href="/produto/{{ produto.id }}/" class="produto-card">
+      <div class="produto-img">
+        {% if produto.imagem %}
+          <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+        {% else %}
+          <div class="produto-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H5v10a2 2 0 002 2h10a2 2 0 002-2V10h1.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
+          </div>
+        {% endif %}
+      </div>
+      <div class="produto-info">
+        <div class="produto-nome">{{ produto.nome }}</div>
+        <div class="produto-preco">R$ {{ produto.preco }}</div>
+        <div class="produto-tamanhos">
+          {% for variacao in produto.variacoes.all %}
+            <span class="tamanho-tag {% if variacao.estoque > 0 %}disponivel{% endif %}">{{ variacao.tamanho }}</span>
+          {% endfor %}
+        </div>
+        <span class="btn-ver">Ver peça</span>
+      </div>
+    </a>
+    {% empty %}
+    <div class="sem-produtos">Nenhum produto cadastrado ainda.</div>
+    {% endfor %}
+  </div>
+  <div class="ver-todos-btn-wrap">
+    <a href="/produtos/" class="ver-todos-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Ver coleção completa
+    </a>
+  </div>
+</section>
+
+<section class="cta-section" id="contato">
+  <div class="cta-eyebrow">Fale Conosco</div>
+  <div class="cta-title">Gostou de<br>alguma <em>peça?</em></div>
+  <p>Fale com a gente no WhatsApp e garanta seu look com atendimento exclusivo.</p>
+  <a href="https://wa.me/5500000000000" class="btn-wa">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.124 1.534 5.856L0 24l6.335-1.51A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.378l-.36-.214-3.726.888.92-3.638-.235-.373A9.818 9.818 0 1112 21.818z"/></svg>
+    Garantir meu look
+  </a>
+</section>
+
+<footer>
+  <div class="footer-logo-dona">Dona</div>
+  <div class="footer-logo-amora">Amora</div>
+  <p class="footer-desc">Moda feminina que valoriza você. Estilo, qualidade e preço justo em Desterro de Entre Rios.</p>
+  <div class="footer-section">
+    <h4>Contato</h4>
+    <a href="https://wa.me/5500000000000">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.124 1.534 5.856L0 24l6.335-1.51A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.378l-.36-.214-3.726.888.92-3.638-.235-.373A9.818 9.818 0 1112 21.818z"/></svg>
+      WhatsApp
+    </a>
+    <a href="https://instagram.com/Dona_amora" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      @Dona_amora
+    </a>
+  </div>
+  <div class="footer-bottom">© 2025 Dona Amora · Todos os direitos reservados</div>
+</footer>
+
+<a href="https://wa.me/5500000000000" class="wa-float" target="_blank">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.124 1.534 5.856L0 24l6.335-1.51A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.378l-.36-.214-3.726.888.92-3.638-.235-.373A9.818 9.818 0 1112 21.818z"/></svg>
+</a>
+
+</body>
+</html>

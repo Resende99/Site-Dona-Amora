@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ produto.nome }} · Dona Amora</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --roxo: #3d1a4a;
+    --roxo-medio: #5c2d72;
+    --roxo-claro: #7b3f96;
+    --roxo-suave: #f5eef8;
+    --roxo-palido: #ede0f5;
+    --verde-wa: #25d366;
+    --off-white: #fdfbfe;
+    --cinza: #9a8fa0;
+    --cinza-claro: #e8e0ec;
+    --escuro: #1a0a20;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Raleway', sans-serif; background: var(--off-white); color: var(--escuro); overflow-x: hidden; }
+
+  nav {
+    position: sticky;
+    top: 0; z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    background: rgba(253,251,254,0.97);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(61,26,74,0.08);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-circle { width: 34px; height: 34px; background: var(--roxo); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .nav-logo-circle svg { width: 18px; height: 18px; color: white; }
+  .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .nav-logo-dona { font-family: 'Playfair Display', serif; font-style: italic; font-size: 9px; color: var(--roxo-claro); letter-spacing: 0.08em; }
+  .nav-logo-amora { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--roxo); }
+  .nav-back { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cinza); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--roxo-claro); }
+  .nav-back svg { width: 15px; height: 15px; }
+
+  .breadcrumb { padding: 11px 24px; font-size: 11px; color: var(--cinza); background: white; border-bottom: 1px solid rgba(61,26,74,0.05); }
+  .breadcrumb a { color: var(--cinza); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--roxo-claro); }
+  .breadcrumb span { margin: 0 6px; }
+
+  .produto-img { width: 100%; aspect-ratio: 3/4; background: var(--roxo-palido); overflow: hidden; }
+  .produto-img img { width: 100%; height: 100%; object-fit: cover; }
+  .produto-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--roxo-palido), var(--roxo-suave)); }
+  .produto-placeholder svg { width: 72px; height: 72px; color: var(--roxo-claro); opacity: 0.25; }
+
+  .produto-info { padding: 28px 24px 0; background: white; }
+
+  .produto-categoria { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--roxo-claro); margin-bottom: 10px; }
+  .produto-nome { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; color: var(--roxo); line-height: 1.2; margin-bottom: 16px; }
+
+  .produto-preco-box { display: flex; align-items: baseline; gap: 10px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--cinza-claro); }
+  .produto-preco { font-size: 26px; font-weight: 700; color: var(--roxo-claro); }
+  .produto-preco-info { font-size: 11px; color: var(--cinza); font-weight: 400; }
+
+  .atrib-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--roxo); margin-bottom: 12px; }
+
+  /* TABELA DE VARIAÇÕES */
+  .variacoes-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+  .variacoes-table thead tr { background: var(--roxo-suave); }
+  .variacoes-table th { font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--roxo); padding: 10px 12px; text-align: left; }
+  .variacoes-table td { font-size: 12px; padding: 10px 12px; border-bottom: 1px solid var(--cinza-claro); color: var(--escuro); font-weight: 500; }
+  .variacoes-table tr:last-child td { border-bottom: none; }
+  .variacoes-table tr.esgotado td { opacity: 0.4; }
+
+  .estoque-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; }
+  .estoque-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .estoque-badge.ok { color: #2e7d32; }
+  .estoque-badge.ok::before { background: #43a047; }
+  .estoque-badge.sem { color: var(--cinza); }
+  .estoque-badge.sem::before { background: var(--cinza-claro); }
+
+  .descricao-box { padding: 20px 0; border-top: 1px solid var(--cinza-claro); }
+  .descricao-titulo { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--roxo); margin-bottom: 12px; }
+  .descricao-texto { font-size: 13px; color: var(--cinza); line-height: 1.9; font-weight: 400; }
+
+  .botoes { padding: 24px 24px 52px; background: white; display: flex; flex-direction: column; gap: 12px; }
+
+  .btn-wa-full { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; background: var(--verde-wa); color: white; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 18px; border-radius: 14px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+  .btn-wa-full:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,211,102,0.3); }
+  .btn-wa-full svg { width: 20px; height: 20px; }
+
+  .btn-voltar { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: var(--roxo-suave); color: var(--roxo); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 16px; border-radius: 14px; text-decoration: none; transition: background 0.2s; }
+  .btn-voltar:hover { background: var(--roxo-palido); }
+  .btn-voltar svg { width: 15px; height: 15px; }
+
+  .wa-float { position: fixed; bottom: 28px; right: 24px; width: 56px; height: 56px; background: var(--verde-wa); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 99; text-decoration: none; transition: transform 0.2s; }
+  .wa-float:hover { transform: scale(1.08); }
+  .wa-float svg { width: 26px; height: 26px; color: white; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-circle">
+      <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="3"/><path d="M12 2C9.5 2 7.5 4 7.5 6.5c0 1.5.7 2.8 1.8 3.7L12 22l2.7-11.8c1.1-.9 1.8-2.2 1.8-3.7C16.5 4 14.5 2 12 2z"/></svg>
+    </div>
+    <div class="nav-logo-text">
+      <span class="nav-logo-dona">Dona</span>
+      <span class="nav-logo-amora">Amora</span>
+    </div>
+  </a>
+  <a href="/" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Voltar
+  </a>
+</nav>
+
+<div class="breadcrumb">
+  <a href="/">Início</a><span>›</span>
+  <a href="/produtos/">Coleção</a><span>›</span>
+  {{ produto.nome }}
+</div>
+
+<div class="produto-img">
+  {% if produto.imagem %}
+    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+  {% else %}
+    <div class="produto-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H5v10a2 2 0 002 2h10a2 2 0 002-2V10h1.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
+    </div>
+  {% endif %}
+</div>
+
+<div class="produto-info">
+  <div class="produto-categoria">Peça Exclusiva</div>
+  <div class="produto-nome">{{ produto.nome }}</div>
+
+  <div class="produto-preco-box">
+    <div class="produto-preco">R$ {{ produto.preco }}</div>
+    <div class="produto-preco-info">Negocie no WhatsApp</div>
+  </div>
+
+  {% if produto.variacoes.all %}
+  <div class="atrib-label">Tamanhos e cores disponíveis</div>
+  <table class="variacoes-table">
+    <thead>
+      <tr>
+        <th>Tamanho</th>
+        <th>Cor</th>
+        <th>Disponível</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for variacao in produto.variacoes.all %}
+      <tr class="{% if variacao.estoque == 0 %}esgotado{% endif %}">
+        <td>{{ variacao.tamanho }}</td>
+        <td>{{ variacao.cor }}</td>
+        <td>
+          {% if variacao.estoque > 0 %}
+            <span class="estoque-badge ok">{{ variacao.estoque }} un.</span>
+          {% else %}
+            <span class="estoque-badge sem">Esgotado</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  {% if produto.descricao %}
+  <div class="descricao-box">
+    <div class="descricao-titulo">Descrição</div>
+    <div class="descricao-texto">{{ produto.descricao }}</div>
+  </div>
+  {% endif %}
+</div>
+
+<div class="botoes">
+  <a href="https://wa.me/5500000000000?text=Olá! Tenho interesse na peça: {{ produto.nome }} - R$ {{ produto.preco }}" class="btn-wa-full">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.124 1.534 5.856L0 24l6.335-1.51A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.378l-.36-.214-3.726.888.92-3.638-.235-.373A9.818 9.818 0 1112 21.818z"/></svg>
+    Quero essa peça
+  </a>
+  <a href="/" class="btn-voltar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Ver mais peças
+  </a>
+</div>
+
+<a href="https://wa.me/5500000000000" class="wa-float" target="_blank">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.124 1.534 5.856L0 24l6.335-1.51A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.378l-.36-.214-3.726.888.92-3.638-.235-.373A9.818 9.818 0 1112 21.818z"/></svg>
+</a>
+
+</body>
+</html>
