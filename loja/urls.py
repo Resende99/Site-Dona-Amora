@@ -9,4 +9,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('produtos/', views.todos_produtos, name='todos_produtos'),
     path('produto/<int:id>/', views.detalhe, name='detalhe'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

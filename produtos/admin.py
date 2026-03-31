@@ -8,3 +8,6 @@ class VariacaoInline(admin.TabularInline):
 @admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
     inlines = [VariacaoInline]
+    list_display = ("nome", "categoria", "preco", "criado_em")
+    list_filter = ("categoria", "criado_em")
+    search_fields = ("nome", "descricao")

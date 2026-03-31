@@ -1,14 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ produto.nome }} · Dona Amora</title>
+<title>{{ produto.nome }} - Dona Amora</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --roxo: #3d1a4a;
-    --roxo-medio: #5c2d72;
+    --roxo: #3d163c;
     --roxo-claro: #7b3f96;
     --roxo-suave: #f5eef8;
     --roxo-palido: #ede0f5;
@@ -23,19 +23,16 @@
   body { font-family: 'Raleway', sans-serif; background: var(--off-white); color: var(--escuro); overflow-x: hidden; }
 
   nav {
-    position: sticky;
-    top: 0; z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
     padding: 14px 24px;
     background: rgba(253,251,254,0.97);
     backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(61,26,74,0.08);
+    border-bottom: 1px solid rgba(61,22,60,0.08);
   }
   .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   .nav-logo-circle { width: 34px; height: 34px; background: var(--roxo); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .nav-logo-circle svg { width: 18px; height: 18px; color: white; }
+  .nav-logo-circle svg { width: 16px; height: 16px; color: white; }
   .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
   .nav-logo-dona { font-family: 'Playfair Display', serif; font-style: italic; font-size: 9px; color: var(--roxo-claro); letter-spacing: 0.08em; }
   .nav-logo-amora { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--roxo); }
@@ -43,7 +40,7 @@
   .nav-back:hover { color: var(--roxo-claro); }
   .nav-back svg { width: 15px; height: 15px; }
 
-  .breadcrumb { padding: 11px 24px; font-size: 11px; color: var(--cinza); background: white; border-bottom: 1px solid rgba(61,26,74,0.05); }
+  .breadcrumb { padding: 11px 24px; font-size: 11px; color: var(--cinza); background: white; border-bottom: 1px solid rgba(61,22,60,0.05); }
   .breadcrumb a { color: var(--cinza); text-decoration: none; transition: color 0.2s; }
   .breadcrumb a:hover { color: var(--roxo-claro); }
   .breadcrumb span { margin: 0 6px; }
@@ -54,24 +51,19 @@
   .produto-placeholder svg { width: 72px; height: 72px; color: var(--roxo-claro); opacity: 0.25; }
 
   .produto-info { padding: 28px 24px 0; background: white; }
-
   .produto-categoria { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--roxo-claro); margin-bottom: 10px; }
   .produto-nome { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; color: var(--roxo); line-height: 1.2; margin-bottom: 16px; }
-
   .produto-preco-box { display: flex; align-items: baseline; gap: 10px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--cinza-claro); }
   .produto-preco { font-size: 26px; font-weight: 700; color: var(--roxo-claro); }
   .produto-preco-info { font-size: 11px; color: var(--cinza); font-weight: 400; }
 
   .atrib-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--roxo); margin-bottom: 12px; }
-
-  /* TABELA DE VARIAÇÕES */
   .variacoes-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
   .variacoes-table thead tr { background: var(--roxo-suave); }
   .variacoes-table th { font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--roxo); padding: 10px 12px; text-align: left; }
   .variacoes-table td { font-size: 12px; padding: 10px 12px; border-bottom: 1px solid var(--cinza-claro); color: var(--escuro); font-weight: 500; }
   .variacoes-table tr:last-child td { border-bottom: none; }
   .variacoes-table tr.esgotado td { opacity: 0.4; }
-
   .estoque-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; }
   .estoque-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
   .estoque-badge.ok { color: #2e7d32; }
@@ -84,11 +76,9 @@
   .descricao-texto { font-size: 13px; color: var(--cinza); line-height: 1.9; font-weight: 400; }
 
   .botoes { padding: 24px 24px 52px; background: white; display: flex; flex-direction: column; gap: 12px; }
-
   .btn-wa-full { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; background: var(--verde-wa); color: white; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 18px; border-radius: 14px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
   .btn-wa-full:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,211,102,0.3); }
   .btn-wa-full svg { width: 20px; height: 20px; }
-
   .btn-voltar { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: var(--roxo-suave); color: var(--roxo); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 16px; border-radius: 14px; text-decoration: none; transition: background 0.2s; }
   .btn-voltar:hover { background: var(--roxo-palido); }
   .btn-voltar svg { width: 15px; height: 15px; }
@@ -96,6 +86,14 @@
   .wa-float { position: fixed; bottom: 28px; right: 24px; width: 56px; height: 56px; background: var(--verde-wa); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 99; text-decoration: none; transition: transform 0.2s; }
   .wa-float:hover { transform: scale(1.08); }
   .wa-float svg { width: 26px; height: 26px; color: white; }
+
+  @media (max-width: 600px) {
+    nav { padding: 14px 16px; }
+    .breadcrumb { padding: 10px 16px; }
+    .produto-info { padding: 24px 16px 0; }
+    .botoes { padding: 20px 16px 48px; }
+    .wa-float { width: 54px; height: 54px; right: 18px; bottom: 20px; }
+  }
 </style>
 </head>
 <body>
@@ -133,9 +131,8 @@
 </div>
 
 <div class="produto-info">
-  <div class="produto-categoria">Peça Exclusiva</div>
+  <div class="produto-categoria">Peça exclusiva</div>
   <div class="produto-nome">{{ produto.nome }}</div>
-
   <div class="produto-preco-box">
     <div class="produto-preco">R$ {{ produto.preco }}</div>
     <div class="produto-preco-info">Negocie no WhatsApp</div>
@@ -178,7 +175,7 @@
 </div>
 
 <div class="botoes">
-  <a href="https://wa.me/5500000000000?text=Olá! Tenho interesse na peça: {{ produto.nome }} - R$ {{ produto.preco }}" class="btn-wa-full">
+  <a href="{{ site_whatsapp_url }}?text=Olá! Tenho interesse na peça: {{ produto.nome }} - R$ {{ produto.preco }}" class="btn-wa-full">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.124 1.534 5.856L0 24l6.335-1.51A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.378l-.36-.214-3.726.888.92-3.638-.235-.373A9.818 9.818 0 1112 21.818z"/></svg>
     Quero essa peça
   </a>
@@ -188,7 +185,7 @@
   </a>
 </div>
 
-<a href="https://wa.me/5500000000000" class="wa-float" target="_blank">
+<a href="{{ site_whatsapp_url }}" class="wa-float" target="_blank">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.124 1.534 5.856L0 24l6.335-1.51A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.378l-.36-.214-3.726.888.92-3.638-.235-.373A9.818 9.818 0 1112 21.818z"/></svg>
 </a>
 
