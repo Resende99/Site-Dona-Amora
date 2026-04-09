@@ -1,0 +1,26 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div id="content-main">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="module aligned">
+      {{ form.as_p }}
+    </fieldset>
+
+    <div class="submit-row">
+      <input type="submit" value="Importar catalogo" class="default">
+    </div>
+  </form>
+
+  <div class="module" style="margin-top: 24px; padding: 16px;">
+    <h2>Formato do CSV</h2>
+    <p>Use uma linha por variacao e repita os dados do produto quando houver mais de um tamanho.</p>
+    <pre>nome,descricao,preco,categoria,imagem,tamanho,cor,estoque
+Vestido Aurora,Vestido longo floral,149.90,vestidos,aurora.jpg|aurora-costas.jpg,P,Rose,2
+Vestido Aurora,Vestido longo floral,149.90,vestidos,aurora.jpg|aurora-costas.jpg,M,Rose,3</pre>
+    <p>Para varias fotos do mesmo produto, separe os nomes com <strong>|</strong> na coluna <strong>imagem</strong>.</p>
+    <p>Categorias aceitas: vestidos, blusas, calcas, conjuntos, saias, shorts, jaquetas.</p>
+  </div>
+</div>
+{% endblock %}

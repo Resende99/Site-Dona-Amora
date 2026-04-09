@@ -28,6 +28,13 @@ class Produto(models.Model):
     def __str__(self):
         return self.nome
 
+    @property
+    def galeria_imagens(self):
+        imagens = list(self.imagens_adicionais.all())
+        if self.imagem:
+            return [self.imagem, *[imagem.arquivo for imagem in imagens]]
+        return [imagem.arquivo for imagem in imagens]
+
 
 class Variacao(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE, related_name="variacoes")
@@ -37,3 +44,15 @@ class Variacao(models.Model):
 
     def __str__(self):
         return f"{self.produto.nome} - {self.tamanho} - {self.cor}"
+
+
+class ProdutoImagem(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE, related_name="imagens_adicionais")
+    arquivo = models.ImageField(upload_to="produtos/galeria/")
+    ordem = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ("ordem", "id")
+
+    def __str__(self):
+        return f"Imagem de {self.produto.nome}"

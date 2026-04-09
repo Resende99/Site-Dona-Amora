@@ -45,8 +45,12 @@
   .breadcrumb a:hover { color: var(--roxo-claro); }
   .breadcrumb span { margin: 0 6px; }
 
+  .produto-galeria { background: white; }
   .produto-img { width: 100%; aspect-ratio: 3/4; background: var(--roxo-palido); overflow: hidden; }
   .produto-img img { width: 100%; height: 100%; object-fit: cover; }
+  .produto-thumbs { display: grid; grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); gap: 10px; padding: 12px 24px 0; background: white; }
+  .produto-thumb { aspect-ratio: 1; border-radius: 14px; overflow: hidden; border: 1px solid rgba(61,22,60,0.1); background: var(--roxo-suave); }
+  .produto-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .produto-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--roxo-palido), var(--roxo-suave)); }
   .produto-placeholder svg { width: 72px; height: 72px; color: var(--roxo-claro); opacity: 0.25; }
 
@@ -120,12 +124,25 @@
   {{ produto.nome }}
 </div>
 
-<div class="produto-img">
-  {% if produto.imagem %}
-    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
-  {% else %}
-    <div class="produto-placeholder">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H5v10a2 2 0 002 2h10a2 2 0 002-2V10h1.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
+<div class="produto-galeria">
+  <div class="produto-img">
+    {% if produto.imagem %}
+      <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+    {% elif produto.galeria_imagens %}
+      <img src="{{ produto.galeria_imagens.0.url }}" alt="{{ produto.nome }}">
+    {% else %}
+      <div class="produto-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H5v10a2 2 0 002 2h10a2 2 0 002-2V10h1.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
+      </div>
+    {% endif %}
+  </div>
+  {% if produto.galeria_imagens|length > 1 %}
+    <div class="produto-thumbs">
+      {% for imagem in produto.galeria_imagens %}
+        <div class="produto-thumb">
+          <img src="{{ imagem.url }}" alt="{{ produto.nome }} {{ forloop.counter }}">
+        </div>
+      {% endfor %}
     </div>
   {% endif %}
 </div>
@@ -175,7 +192,7 @@
 </div>
 
 <div class="botoes">
-  <a href="{{ site_whatsapp_url }}?text=Olá! Tenho interesse na peça: {{ produto.nome }} - R$ {{ produto.preco }}" class="btn-wa-full">
+  <a href="https://wa.me/{{ site_whatsapp_number_link }}?text={{ 'Olá! Tenho interesse na peça: '|add:produto.nome|add:' - R$ '|add:produto.preco|urlencode }}" class="btn-wa-full" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.124 1.534 5.856L0 24l6.335-1.51A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.378l-.36-.214-3.726.888.92-3.638-.235-.373A9.818 9.818 0 1112 21.818z"/></svg>
     Quero essa peça
   </a>
@@ -185,7 +202,7 @@
   </a>
 </div>
 
-<a href="{{ site_whatsapp_url }}" class="wa-float" target="_blank">
+<a href="{{ site_whatsapp_url }}" class="wa-float" target="_blank" rel="noopener">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.124 1.534 5.856L0 24l6.335-1.51A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.378l-.36-.214-3.726.888.92-3.638-.235-.373A9.818 9.818 0 1112 21.818z"/></svg>
 </a>
 
