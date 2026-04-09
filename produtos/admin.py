@@ -1,4 +1,5 @@
 from django.contrib import admin, messages
+from django.contrib.auth.models import Group, User
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
@@ -10,6 +11,8 @@ from .models import Produto, ProdutoImagem, Variacao
 admin.site.site_header = "Admin Dona Amora"
 admin.site.site_title = "Admin Dona Amora"
 admin.site.index_title = "Painel Dona Amora"
+admin.site.unregister(User)
+admin.site.unregister(Group)
 
 
 class VariacaoInline(admin.TabularInline):
