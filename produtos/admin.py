@@ -7,6 +7,10 @@ from .forms import CatalogoImportForm
 from .importers import ImportacaoCatalogoErro, importar_catalogo
 from .models import Produto, ProdutoImagem, Variacao
 
+admin.site.site_header = "Admin Dona Amora"
+admin.site.site_title = "Admin Dona Amora"
+admin.site.index_title = "Painel Dona Amora"
+
 
 class VariacaoInline(admin.TabularInline):
     model = Variacao
