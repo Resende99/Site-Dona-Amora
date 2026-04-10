@@ -30,12 +30,8 @@
     backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(61,22,60,0.08);
   }
-  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .nav-logo-circle { width: 34px; height: 34px; background: var(--roxo); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .nav-logo-circle svg { width: 16px; height: 16px; color: white; }
-  .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
-  .nav-logo-dona { font-family: 'Playfair Display', serif; font-style: italic; font-size: 9px; color: var(--roxo-claro); letter-spacing: 0.08em; }
-  .nav-logo-amora { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--roxo); }
+  .nav-logo { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; text-decoration: none; flex-shrink: 0; border-radius: 14px; background: linear-gradient(135deg, var(--roxo), #5d2c63); box-shadow: 0 10px 26px rgba(61,22,60,0.18); overflow: hidden; }
+  .nav-logo-image { width: 84px; height: auto; object-fit: contain; object-position: left center; transform: translateX(-17px); }
   .nav-back { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cinza); text-decoration: none; transition: color 0.2s; }
   .nav-back:hover { color: var(--roxo-claro); }
   .nav-back svg { width: 15px; height: 15px; }
@@ -93,6 +89,8 @@
 
   @media (max-width: 600px) {
     nav { padding: 14px 16px; }
+    .nav-logo { width: 40px; height: 40px; border-radius: 12px; }
+    .nav-logo-image { width: 76px; transform: translateX(-15px); }
     .breadcrumb { padding: 10px 16px; }
     .produto-info { padding: 24px 16px 0; }
     .botoes { padding: 20px 16px 48px; }
@@ -104,13 +102,7 @@
 
 <nav>
   <a href="/" class="nav-logo">
-    <div class="nav-logo-circle">
-      <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="3"/><path d="M12 2C9.5 2 7.5 4 7.5 6.5c0 1.5.7 2.8 1.8 3.7L12 22l2.7-11.8c1.1-.9 1.8-2.2 1.8-3.7C16.5 4 14.5 2 12 2z"/></svg>
-    </div>
-    <div class="nav-logo-text">
-      <span class="nav-logo-dona">Dona</span>
-      <span class="nav-logo-amora">Amora</span>
-    </div>
+    <img src="{% static 'images/logo.png' %}" alt="Uva Dona Amora" class="nav-logo-image">
   </a>
   <a href="/" class="nav-back">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>

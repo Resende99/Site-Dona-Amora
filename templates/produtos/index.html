@@ -31,12 +31,8 @@
     backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(61,22,60,0.08);
   }
-  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .nav-logo-circle { width: 36px; height: 36px; background: var(--roxo); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .nav-logo-circle svg { width: 18px; height: 18px; color: white; }
-  .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
-  .nav-logo-dona { font-family: 'Playfair Display', serif; font-style: italic; font-size: 10px; color: var(--roxo-claro); letter-spacing: 0.08em; }
-  .nav-logo-amora { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--roxo); }
+  .nav-logo { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; text-decoration: none; flex-shrink: 0; border-radius: 14px; background: linear-gradient(135deg, var(--roxo), #5d2c63); box-shadow: 0 10px 26px rgba(61,22,60,0.18); overflow: hidden; }
+  .nav-logo-image { width: 84px; height: auto; object-fit: contain; object-position: left center; transform: translateX(-17px); }
   .nav-menu { display: flex; gap: 28px; list-style: none; }
   .nav-menu a { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--escuro); text-decoration: none; transition: color 0.2s; }
   .nav-menu a:hover { color: var(--roxo-claro); }
@@ -53,18 +49,9 @@
     content: ''; position: absolute; inset: 0;
     background: radial-gradient(ellipse 60% 50% at 20% 20%, rgba(123,63,150,0.45) 0%, transparent 60%),
                 radial-gradient(ellipse 40% 40% at 80% 80%, rgba(92,45,114,0.55) 0%, transparent 60%);
+    z-index: 0;
   }
-  .hero::after {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: url("{% static 'img/dona-amora-logo-white.png' %}");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: min(700px, 85vw);
-    opacity: 0.1;
-    pointer-events: none;
-  }
-  .hero-content { position: relative; z-index: 1; }
+  .hero-content { position: relative; z-index: 2; }
   .hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.78); font-size: 10px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; padding: 8px 20px; border-radius: 100px; margin-bottom: 40px; animation: fadeUp 0.8s ease both; }
   .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.7); }
 
@@ -173,6 +160,8 @@
   @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
   @media (max-width: 600px) {
     nav { padding: 14px 18px; }
+    .nav-logo { width: 40px; height: 40px; border-radius: 12px; }
+    .nav-logo-image { width: 76px; transform: translateX(-15px); }
     .nav-menu { display: none; }
     .nav-hamburger { display: flex; }
     .hero { padding: 110px 18px 72px; }
@@ -185,13 +174,7 @@
 
 <nav>
   <a href="/" class="nav-logo">
-    <div class="nav-logo-circle">
-      <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="3"/><path d="M12 2C9.5 2 7.5 4 7.5 6.5c0 1.5.7 2.8 1.8 3.7L12 22l2.7-11.8c1.1-.9 1.8-2.2 1.8-3.7C16.5 4 14.5 2 12 2z"/></svg>
-    </div>
-    <div class="nav-logo-text">
-      <span class="nav-logo-dona">Dona</span>
-      <span class="nav-logo-amora">Amora</span>
-    </div>
+    <img src="{% static 'images/logo.png' %}" alt="Uva Dona Amora" class="nav-logo-image">
   </a>
   <ul class="nav-menu">
     <li><a href="/produtos/">Coleção</a></li>

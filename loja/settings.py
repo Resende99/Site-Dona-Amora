@@ -1,6 +1,10 @@
 import os
 from pathlib import Path
+from importlib.util import find_spec
 from django.core.exceptions import ImproperlyConfigured
+
+HAS_DJ_DATABASE_URL = find_spec("dj_database_url") is not None
+HAS_WHITENOISE = find_spec("whitenoise") is not None
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +45,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+if HAS_WHITENOISE:
+    MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
+
 ROOT_URLCONF = "loja.urls"
 
 TEMPLATES = [
@@ -62,12 +69,30 @@ TEMPLATES = [
 WSGI_APPLICATION = "loja.wsgi.application"
 
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
+
+if DATABASE_URL:
+    if not HAS_DJ_DATABASE_URL:
+        raise ImproperlyConfigured(
+            "DATABASE_URL foi definida, mas a dependencia dj-database-url nao esta instalada."
+        )
+
+    import dj_database_url
+
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=os.getenv("DATABASE_SSL_REQUIRE", "True").lower() in {"1", "true", "yes", "on"},
+        )
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -98,6 +123,8 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+if HAS_WHITENOISE:
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"

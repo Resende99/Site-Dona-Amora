@@ -1,5 +1,6 @@
 from django.contrib import admin, messages
 from django.contrib.auth.models import Group, User
+from django.utils.html import format_html
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
@@ -29,9 +30,22 @@ class ProdutoImagemInline(admin.TabularInline):
 class ProdutoAdmin(admin.ModelAdmin):
     change_list_template = "admin/produtos/produto/change_list.html"
     inlines = [VariacaoInline, ProdutoImagemInline]
-    list_display = ("nome", "categoria", "preco", "criado_em")
+    list_display = ("nome", "categoria", "preco", "criado_em", "acoes")
     list_filter = ("categoria", "criado_em")
     search_fields = ("nome", "descricao")
+    list_per_page = 50
+
+    def acoes(self, obj):
+        editar_url = reverse("admin:produtos_produto_change", args=[obj.pk])
+        excluir_url = reverse("admin:produtos_produto_delete", args=[obj.pk])
+        return format_html(
+            '<a href="{}" style="margin-right: 10px;">Editar</a>'
+            '<a href="{}" style="color: #b42318;">Excluir</a>',
+            editar_url,
+            excluir_url,
+        )
+
+    acoes.short_description = "Acoes"
 
     def get_urls(self):
         urls = super().get_urls()

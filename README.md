@@ -17,6 +17,7 @@ Loja virtual em Django para apresentar o catalogo da Dona Amora, com vitrine de 
 - Python
 - Django
 - SQLite
+- PostgreSQL
 - HTML + CSS
 
 ## Como rodar localmente
@@ -40,7 +41,7 @@ venv\Scripts\activate
 3. Instale as dependencias:
 
 ```bash
-pip install django pillow
+pip install -r requirements.txt
 ```
 
 4. Defina a chave do Django:
@@ -76,6 +77,9 @@ O projeto usa estas variaveis:
 - `DJANGO_SECRET_KEY`: obrigatoria fora de `DEBUG`.
 - `DJANGO_DEBUG`: ativa modo debug quando usar `1`, `true`, `yes` ou `on`.
 - `DJANGO_ALLOWED_HOSTS`: lista separada por virgula.
+- `DATABASE_URL`: banco em producao. Se nao existir, usa SQLite local.
+- `DATABASE_SSL_REQUIRE`: exige SSL no banco quando usar `DATABASE_URL`.
+- `DJANGO_SECURE_SSL_REDIRECT`: redireciona HTTP para HTTPS em producao.
 - `WHATSAPP_NUMBER`: numero usado nos links do WhatsApp.
 - `INSTAGRAM_HANDLE`: usuario do Instagram.
 - `INSTAGRAM_URL`: link completo do Instagram.
@@ -114,6 +118,41 @@ Para rodar os testes:
 $env:DJANGO_SECRET_KEY="teste-local"
 python manage.py test produtos
 ```
+
+## Deploy no DigitalOcean
+
+### O que ja ficou preparado
+
+- `requirements.txt` com dependencias de producao.
+- `Procfile` para subir com Gunicorn.
+- WhiteNoise para servir arquivos estaticos.
+- suporte a `DATABASE_URL` para usar PostgreSQL.
+
+### Variaveis recomendadas no servidor
+
+```text
+DJANGO_DEBUG=False
+DJANGO_SECRET_KEY=sua-chave-grande-e-aleatoria
+DJANGO_ALLOWED_HOSTS=seu-dominio.com,www.seu-dominio.com
+DJANGO_SECURE_SSL_REDIRECT=True
+DATABASE_URL=postgresql://USER:SENHA@HOST:PORTA/NOME_DO_BANCO
+DATABASE_SSL_REQUIRE=True
+WHATSAPP_NUMBER=5531999999999
+INSTAGRAM_HANDLE=dona_amora
+INSTAGRAM_URL=https://www.instagram.com/dona_amora
+```
+
+### Comandos de deploy
+
+```bash
+python manage.py migrate
+python manage.py collectstatic --noinput
+python manage.py createsuperuser
+```
+
+### Importante sobre imagens dos produtos
+
+Os arquivos estaticos agora podem ser servidos pelo proprio app com WhiteNoise, mas os uploads de produtos em `media/` precisam ser servidos pelo Nginx, por volume persistente ou por object storage. Em producao, o Django nao deve servir `media/` sozinho.
 
 ## Estrutura principal
 

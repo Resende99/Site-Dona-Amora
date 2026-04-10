@@ -6,3 +6,10 @@
   </li>
   {{ block.super }}
 {% endblock %}
+
+{% block content_title %}
+  {{ block.super }}
+  <p style="margin: 12px 0 0; color: #5f6b7a; font-size: 13px;">
+    Para excluir varios produtos de uma vez, marque os itens e use a acao "Excluir itens selecionados".
+  </p>
+{% endblock %}
